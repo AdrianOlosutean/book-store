@@ -1,0 +1,45 @@
+<md-dialog id="bookInsertDialog" flex="50">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Insert</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content" layout="column">
+                <md-input-container>
+                    <label>Isbn</label>
+                    <input required ng-model="isbn">
+                </md-input-container>
+                <md-input-container>
+                    <label>Title</label>
+                    <input required ng-model="title">
+                </md-input-container>
+                <md-input-container>
+                    <label>Author</label>
+                    <input required ng-model="author">
+                </md-input-container>
+                <md-input-container>
+                    <label>Genre</label>
+                    <input required ng-model="genre">
+                </md-input-container>
+                <md-input-container>
+                    <label>Amount</label>
+                    <input required ng-model="amount">
+                </md-input-container>
+                <md-input-container>
+                    <label>Price</label>
+                    <input required ng-model="price">
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="insert()">
+                Insert
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

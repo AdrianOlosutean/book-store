@@ -1,0 +1,87 @@
+<div ng-controller="clientController" layout="column" style="height:500px;" ng-cloak="">
+
+    <section layout="row" flex="">
+
+        <md-sidenav class="md-sidenav-left" md-component-id="search" md-is-locked-open="true" md-whiteframe="4" ng-hide="isOpenRight()">
+
+            <md-content layout-padding="" layout-wrap>
+                <md-input-container>
+                    <label>Genre</label>
+                    <input ng-model="genre">
+                </md-input-container>
+                <md-input-container>
+                    <label>Title</label>
+                    <input ng-model="title">
+                </md-input-container>
+                <md-input-container>
+                    <label>Author</label>
+                    <input ng-model="author">
+                </md-input-container>
+                <md-button class="md-raised md-primary" ng-click="query()">Search</md-button>
+            </md-content>
+
+        </md-sidenav>
+
+        <md-content flex="" layout-padding="">
+            <md-button style="position:fixed !important;" ng-click="toggleRight()" ng-hide="isOpenRight()"
+                       class="md-fab md-fab-bottom-right">
+                <md-icon>shopping_cart</md-icon>
+            </md-button>
+            <div class='md-padding' layout="row" layout-wrap>
+                <md-card ng-repeat="book in books" style="width: 280px;" >
+                    <md-card-header>
+                        <md-card-header-text>
+                            <span class="md-title">{{book.title}}</span>
+                            <p class="md-subhead">{{book.author}}</p>
+                        </md-card-header-text>
+                    </md-card-header>
+                    <!--<img src="http://placehold.it/150x150" class="md-card-image" alt="user avatar">-->
+                    <md-card-content>
+                        <strong>Price: {{book.price | currency}}</strong>
+                        <p>Quantity: {{book.quantity}}</p>
+                        <md-card-actions>
+                            <md-button class="md-raised md-primary" ng-show="book.quantity > 0" ng-click="addToShopcart($index)">
+                                <md-icon>add_shopping_cart</md-icon>
+                            </md-button>
+                        </md-card-actions>
+                    </md-card-content>
+                </md-card>
+            </div>
+
+            <div flex=""></div>
+
+        </md-content>
+
+        <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+
+            <md-toolbar class="md-theme-light">
+                <h1 class="md-toolbar-tools">Shopping Cart</h1>
+            </md-toolbar>
+            <md-content layout-padding="" ng-controller="ShopcartController">
+                <md-list-item class="md-3-line" ng-repeat="item in shopcart" ng-click="null">
+                    <div class="md-list-item-text" layout="column">
+                        <strong>{{ item.title }}</strong>
+                        <p>{{ item.author }}</p>
+                        <md-input-container>
+                            <input ng-model="item.quantity">
+                        </md-input-container>
+                        <div layout="row">
+                            <md-button class="md-primary" ng-click="removeItem($index)">
+                                <md-icon>remove_shopping_cart</md-icon>
+                            </md-button>
+                            <h4>Sum: {{item.quantity * item.price | currency}}</h4>
+                        </div>
+                    </div>
+                </md-list-item>
+                <md-divider></md-divider>
+                <h2>Total: {{sum() | currency}}</h2>
+                <p ng-hide="allValid()">Invalid quantities</p>
+                <md-button class="md-raised md-primary" ng-show="allValid()" ng-click="buy()">
+                    Buy
+                </md-button>
+            </md-content>
+
+        </md-sidenav>
+
+    </section>
+</div>

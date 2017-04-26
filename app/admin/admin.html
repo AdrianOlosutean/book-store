@@ -1,0 +1,100 @@
+<style>
+    .tabsdemoDynamicHeight md-content .md-fab.visible {
+        transform: scale(1);
+        transition: transform 0.3s linear;
+    }
+    .tabsdemoDynamicHeight md-content .md-fab {
+        transform: scale(0);
+        transition: transform 0.3s linear;
+    }
+    .tabsdemoDynamicHeight md-content {
+        background-color: transparent !important; }
+    .tabsdemoDynamicHeight md-content md-tabs {
+        background: #f6f6f6;
+        border: 1px solid #e1e1e1; }
+    .tabsdemoDynamicHeight md-content md-tabs md-tabs-canvas {
+        background: white; }
+    .tabsdemoDynamicHeight md-content h1:first-child {
+        margin-top: 0; }
+
+</style>
+
+<div ng-cloak="" class="tabsdemoDynamicHeight" ng-controller="adminController">
+    <md-content style="min-height: 89vh" class="tabsdemoDynamicHeight">
+        <md-button ng-class="{ visible: selectedTab==0 }" class="md-fab md-fab-bottom-right" ng-click="insertBookDialog($event)">
+            <md-icon>add</md-icon>
+        </md-button>
+
+        <md-button ng-class="{ visible: selectedTab==1 }" class="md-fab md-primary md-fab-bottom-right" ng-click="insertUserDialog($event)">
+            <md-icon>add</md-icon>
+        </md-button>
+        <md-tabs style="min-height: 89vh" md-dynamic-height="" md-border-bottom="" md-selected="selectedTab">
+            <md-tab label="Books">
+                <md-content ng-controller="adminBookController" class="md-padding">
+                    <md-button class="md-raised" ng-click="downloadPdf()">
+                        PDF Report
+                    </md-button>
+                    <md-button class="md-raised" ng-csv="unavailableBooks()" csv-header="['ISBN', 'Title', 'Genre', 'Author', 'Quantity' , 'Price']" filename="unavailable.csv">
+                        CSV Report
+                    </md-button>
+
+                    <div layout-margin>
+                        <mdt-table
+                                table-card="{actionIcons: true}"
+                                selectable-rows="true"
+                                alternate-headers="'contextual'"
+                                delete-row-callback="deleteRowCallback(rows)"
+                                save-row-callback="saveRowCallback(row)">
+                            <mdt-header-row>
+                                <mdt-column align-rule="right">Isbn</mdt-column>
+                                <mdt-column align-rule="right" contenteditable="true">Title</mdt-column>
+                                <mdt-column align-rule="right" contenteditable="true">Author</mdt-column>
+                                <mdt-column align-rule="right" contenteditable="true">Genre</mdt-column>
+                                <mdt-column align-rule="right" contenteditable="true">Quantity</mdt-column>
+                                <mdt-column align-rule="right" contenteditable="true">Price</mdt-column>
+                            </mdt-header-row>
+                            <mdt-row ng-repeat="book in books" table-row-id="book.isbn">
+                                <mdt-cell>{{book.isbn}}</mdt-cell>
+                                <mdt-cell editable-field-title="Title" editable-field="largeEditDialog">{{book.title}}</mdt-cell>
+                                <mdt-cell editable-field-title="Author" editable-field="largeEditDialog">{{book.author}}</mdt-cell>
+                                <mdt-cell editable-field-title="Genre" editable-field="largeEditDialog">{{book.genre}}</mdt-cell>
+                                <mdt-cell editable-field-title="Quantity" editable-field="largeEditDialog">{{book.quantity}}</mdt-cell>
+                                <mdt-cell editable-field-title="Price" editable-field="largeEditDialog">{{book.price}}</mdt-cell>
+
+                            </mdt-row>
+                        </mdt-table>
+                    </div>
+                </md-content>
+            </md-tab>
+            <md-tab label="Users">
+                <md-content ng-controller="adminUserController" class="md-padding">
+
+                    <div layout-margin>
+
+                        <mdt-table
+                                table-card="{actionIcons: true}"
+                                selectable-rows="true"
+                                alternate-headers="'contextual'"
+                                delete-row-callback="deleteRowCallback(rows)"
+                                save-row-callback="saveRowCallback(row)">
+                            <mdt-header-row>
+                                <mdt-column align-rule="right">Username</mdt-column>
+                                <mdt-column align-rule="right">Type</mdt-column>
+                                <mdt-column align-rule="right">Firstname</mdt-column>
+                                <mdt-column align-rule="right">Lastname</mdt-column>
+                            </mdt-header-row>
+                            <mdt-row ng-repeat="user in users" table-row-id="user.username">
+                                <mdt-cell editable-field-title="Username" editable-field="largeEditDialog">{{user.username}}</mdt-cell>
+                                <mdt-cell editable-field-title="Type" editable-field="largeEditDialog">{{user.type}}</mdt-cell>
+                                <mdt-cell editable-field-title="Firsname" editable-field="largeEditDialog">{{user.firstname}}</mdt-cell>
+                                <mdt-cell editable-field-title="Lastname" editable-field="largeEditDialog">{{user.lastname}}</mdt-cell>
+                            </mdt-row>
+                        </mdt-table>
+                    </div>
+
+
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+</div>
